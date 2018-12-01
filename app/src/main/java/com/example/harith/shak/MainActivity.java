@@ -21,7 +21,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.harith.shak.Fragment.FragmentOne;
 import com.example.harith.shak.Fragment.PagerAdapter;
 import com.example.harith.shak.db.DataBaseHelper;
-
+import com.example.harith.shak.service.myservice;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,7 +35,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //taba217
+        //==================================================================
+        startService(new Intent(this, myservice.class));
         jsonParse1();
+        //==================================================================
          helper = new DataBaseHelper(this);
          helper.insertUser();
          displayDataBaseInfo();
@@ -71,10 +75,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+//taba217 work::::::
 //=====================================================================================
 public void jsonParse1() {
-    // mQueue = Volley.newRequestQueue(this);
     String url1 = "http://zad.epizy.com/getlec.php";
     String url = "http://192.168.43.128/zad/getlec.php";
     final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -127,6 +130,14 @@ public void jsonParse1() {
         i.putExtra("title", locat);
         startActivity(i);
     }
+
+    protected void onDestroy() {
+
+        Intent restartService = new Intent("RestartService");
+        sendBroadcast(restartService);
+        super.onDestroy();
+    }
+
   //  ====================================================================================
 
 
