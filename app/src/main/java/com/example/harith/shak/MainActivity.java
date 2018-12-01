@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
 
          volleyreguest();
-
          LoadFragment(new FragmentOne());
 
         TabLayout tabLayout =  findViewById(R.id.tab);
@@ -61,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 Toast.makeText(MainActivity.this, "" + tab.getPosition(), Toast.LENGTH_SHORT).show();
+                if (tab.getPosition() == 2) {
+                    volleyreguest();
+                }
         }
 
             @Override
