@@ -10,27 +10,41 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.harith.shak.Fragment.FragmentOne;
 import com.example.harith.shak.Fragment.PagerAdapter;
 import com.example.harith.shak.db.DataBaseHelper;
 import com.example.harith.shak.db.LecAdapter;
 import com.example.harith.shak.db.Users;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     DataBaseHelper helper;
+    private RequestQueue mRequestQueue;
+    private StringRequest mStringRequest;
+    private String url = "http://www.mocky.io/v2/597c41390f0000d002f4dbd1";
+    String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
          helper = new DataBaseHelper(this);
-         helper.insertUser();
-         displayDataBaseInfo();
 
 
-        LoadFragment(new FragmentOne());
+         volleyreguest();
+
+         LoadFragment(new FragmentOne());
 
         TabLayout tabLayout =  findViewById(R.id.tab);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -47,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 Toast.makeText(MainActivity.this, "" + tab.getPosition(), Toast.LENGTH_SHORT).show();
-            }
+        }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
@@ -71,23 +85,47 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-    public void displayDataBaseInfo() {
-        DataBaseHelper helper = new DataBaseHelper(this);
 
 
-        try {
-
-            SQLiteDatabase database = helper.getReadableDatabase();
-
-            Cursor c = database.rawQuery("SELECT * FROM users",null);
+    public void volleyreguest(){
 
 
-            Toast.makeText(MainActivity.this,"NUM " + c.getCount() ,Toast.LENGTH_LONG).show();
+        mRequestQueue = Volley.newRequestQueue(getApplicationContext());
 
+        mStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
 
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
+                try {
+                    JSONObject root = new JSONObject(response);
+
+                    JSONArray jsonArray = root.getJSONArray("users");
+
+                    for (int i =0; i<jsonArray.length(); i++) {
+
+                        JSONObject object = jsonArray.getJSONObject(0);
+
+                        name =  object.getString("name");
+                        int password = object.getInt("id");
+
+                        helper.insertUser(name,password,password,password);
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(getApplicationContext(), "Name: " + name, Toast.LENGTH_LONG).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        mRequestQueue.add(mStringRequest);
     }
+
 
 }

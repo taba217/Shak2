@@ -88,18 +88,17 @@ public class DataBaseHelper extends SQLiteOpenHelper  {
             + ")";
 
 
-    //
-    public void insertUser() {
+    public void insertUser(String name, int password, int phone, int followId) {
         ContentValues values = new ContentValues();
-         // for (int i = 1; i < JsonArray.length; i++) {
+        // for (int i = 1; i < JsonArray.length; i++) {
 
-            values.put(USERS_COLUMN_NAME, "Mogtba");  // JSONString[i].getString("uname") == Mogtba
-            values.put(USERS_COLUMN_PASS, 1234);      //  ..........................
-            values.put(USERS_COLUMN_PHONE, 1232023181);
-            values.put(USERS_COLUMN_FOLLOW_ID, 1);
+        values.put(USERS_COLUMN_NAME, name);  // JSONString[i].getString("uname") == MoJgtba
+        values.put(USERS_COLUMN_PASS, password);      //  ..........................
+        values.put(USERS_COLUMN_PHONE, phone);
+        values.put(USERS_COLUMN_FOLLOW_ID, followId);
 
-            SQLiteDatabase db = getWritableDatabase();
-            db.insert(TABLE_USERS, null, values);
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(TABLE_USERS, null, values);
         //}
     }
 
@@ -138,6 +137,7 @@ public class DataBaseHelper extends SQLiteOpenHelper  {
 
         // users.add(new Users("1","Kalid",1324,123456,1));
         db.close();
+        cursor.close();
         return users;
     }
 }
