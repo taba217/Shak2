@@ -3,48 +3,73 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@mipmap/rebon_unit"
     tools:ignore="ExtraText">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="90dp"
-        android:layout_height="102dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="56dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@color/colorAccent" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="53dp"
+        android:layout_height="66dp"
+        android:layout_gravity="center_vertical|start"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/location_map" />
+
     <LinearLayout
 
+        android:id="@+id/linearLayout"
+        android:layout_width="253dp"
+        android:layout_height="101dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.204"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:textAlignment="center"
             android:id="@+id/lec_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="one" />
+            android:layout_gravity="center_horizontal"
+            android:gravity="top|center_vertical|center_horizontal|center"
+            android:text="one"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/lec_sub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Toq"
-            />
+            android:layout_gravity="center_horizontal"
+            android:text="Toq" />
 
         <TextView
             android:id="@+id/lec_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="date"/>
+            android:layout_gravity="center_horizontal"
+            android:text="date" />
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

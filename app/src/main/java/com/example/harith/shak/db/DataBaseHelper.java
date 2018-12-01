@@ -8,6 +8,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
+import static com.example.harith.shak.MainActivity.locat;
+import static com.example.harith.shak.MainActivity.status;
+import static com.example.harith.shak.MainActivity.v;
+import static com.example.harith.shak.MainActivity.h;
+import static com.example.harith.shak.MainActivity.topic;
+
 public class DataBaseHelper extends SQLiteOpenHelper  {
 
     public DataBaseHelper(Context context) {
@@ -93,10 +99,10 @@ public class DataBaseHelper extends SQLiteOpenHelper  {
         ContentValues values = new ContentValues();
          // for (int i = 1; i < JsonArray.length; i++) {
 
-            values.put(USERS_COLUMN_NAME, "Mogtba");  // JSONString[i].getString("uname") == Mogtba
-            values.put(USERS_COLUMN_PASS, 1234);      //  ..........................
-            values.put(USERS_COLUMN_PHONE, 1232023181);
-            values.put(USERS_COLUMN_FOLLOW_ID, 1);
+            values.put(USERS_COLUMN_NAME, topic);  // JSONString[i].getString("uname") == Mogtba
+            values.put(USERS_COLUMN_PASS, status);      //  ..........................
+            values.put(USERS_COLUMN_PHONE, status);
+            values.put(USERS_COLUMN_FOLLOW_ID, status);
 
             SQLiteDatabase db = getWritableDatabase();
             db.insert(TABLE_USERS, null, values);

@@ -1,5 +1,7 @@
 package com.example.harith.shak;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.TabLayout;
@@ -7,24 +9,33 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ListView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
 import com.example.harith.shak.Fragment.FragmentOne;
 import com.example.harith.shak.Fragment.PagerAdapter;
 import com.example.harith.shak.db.DataBaseHelper;
-import com.example.harith.shak.db.LecAdapter;
-import com.example.harith.shak.db.Users;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
     DataBaseHelper helper;
+    public static String locat,topic,sh_id,time,st,id;
+    public static double v =0, h = 0;
+    public static int status;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        jsonParse1();
          helper = new DataBaseHelper(this);
          helper.insertUser();
          displayDataBaseInfo();
@@ -60,6 +71,63 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+//=====================================================================================
+public void jsonParse1() {
+    // mQueue = Volley.newRequestQueue(this);
+    String url1 = "http://zad.epizy.com/getlec.php";
+    String url = "http://192.168.43.128/zad/getlec.php";
+    final ProgressDialog progressDialog = new ProgressDialog(this);
+    progressDialog.setMessage("Loading...");
+    progressDialog.show();
+    JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+            new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        JSONArray jsonArray = response.getJSONArray("emp");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject lectures = jsonArray.getJSONObject(i);
+                            locat = lectures.getString("locat");
+                            v = lectures.getDouble("v");
+                            h = lectures.getDouble("h");
+                            sh_id = lectures.getString("sh_name");
+                            topic = lectures.getString("topic");
+                            locat = lectures.getString("locat");
+                            time = lectures.getString("time");
+                            status = lectures.getInt("status");
+                           }
+                         progressDialog.dismiss();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                       progressDialog.dismiss();
+                    }
+                }
+
+            }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            error.printStackTrace();
+            progressDialog.dismiss();
+
+
+
+
+        }
+    });
+
+    RequestQueue requestQueue = Volley.newRequestQueue(this);
+    requestQueue.add(request);
+}
+    public void maploc() {
+        Intent i = new Intent(this, MapsActivity.class);
+        i.putExtra("v", v);
+        i.putExtra("h", h);
+        i.putExtra("title", locat);
+        startActivity(i);
+    }
+  //  ====================================================================================
 
 
 
