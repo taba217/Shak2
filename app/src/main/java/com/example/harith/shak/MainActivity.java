@@ -81,7 +81,7 @@ public void jsonParse1() {
     String url1 = "http://zad.epizy.com/getlec.php";
     String url = "http://192.168.43.128/zad/getlec.php";
     final ProgressDialog progressDialog = new ProgressDialog(this);
-    progressDialog.setMessage("Loading...");
+    progressDialog.setMessage("جاري التحديث...");
     progressDialog.show();
     JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
             new Response.Listener<JSONObject>() {
