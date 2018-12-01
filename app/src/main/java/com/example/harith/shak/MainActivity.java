@@ -2,13 +2,17 @@ package com.example.harith.shak;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -25,6 +29,7 @@ import com.example.harith.shak.service.myservice;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import com.example.harith.shak.service.myservice;
 
 public class MainActivity extends AppCompatActivity {
     DataBaseHelper helper;
@@ -37,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //taba217
         //==================================================================
-        startService(new Intent(this, myservice.class));
         jsonParse1();
         //==================================================================
          helper = new DataBaseHelper(this);
@@ -71,13 +75,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+jsonParse1();
             }
         });
     }
 //taba217 work::::::
 //=====================================================================================
 public void jsonParse1() {
+    startService(new Intent(this, myservice.class));
     String url1 = "http://zad.epizy.com/getlec.php";
     String url = "http://192.168.43.128/zad/getlec.php";
     final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -135,6 +140,12 @@ public void jsonParse1() {
 
         Intent restartService = new Intent("RestartService");
         sendBroadcast(restartService);
+        SharedPreferences sharedPref = getSharedPreferences("mySettings", MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("mySetting",myservice.s1);
+        editor.apply();
+
         super.onDestroy();
     }
 

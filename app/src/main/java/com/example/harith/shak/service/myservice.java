@@ -40,7 +40,7 @@ import java.util.ArrayList;
  */
 
 public class myservice extends Service {
-    static  int notify=0,s0=0,s1;
+   public static  int notify=0,s0=0,s1;
     String temp="";
     boolean isrunning=false;
     ArrayList<Integer> statusSum=new ArrayList<>();
@@ -131,7 +131,7 @@ public class myservice extends Service {
 
                                 // textView.append(firstName + ", " + String.valueOf(age) + ", " + mail + String.valueOf(notify) + "\n\n");
                             }
-                            if (s0==0)
+                         //   if (s0==0)
                                 s0=s1;
                         } catch (JSONException e) {
                             e.printStackTrace();
