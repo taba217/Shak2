@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
 
          volleyreguest();
+
          LoadFragment(new FragmentOne());
 
 //        new Handler().postDelayed(new Runnable() {
