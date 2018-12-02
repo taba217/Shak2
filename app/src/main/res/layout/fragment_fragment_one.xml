@@ -6,10 +6,17 @@
     tools:context=".Fragment.FragmentOne"
     >
 
+   <android.support.v4.widget.SwipeRefreshLayout
+       android:id="@+id/refresh"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
    <ListView
        android:layout_margin="8dp"
        android:id="@+id/list"
        android:layout_width="match_parent"
        android:layout_height="match_parent"/>
+
+   </android.support.v4.widget.SwipeRefreshLayout>
 
 </FrameLayout>

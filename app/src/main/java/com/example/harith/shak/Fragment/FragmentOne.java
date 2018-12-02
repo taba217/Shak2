@@ -1,10 +1,10 @@
 package com.example.harith.shak.Fragment;
 
 
-import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +20,9 @@ import java.util.ArrayList;
 
 
 public class FragmentOne extends Fragment {
-
-
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    DataBaseHelper helper;
+    View view;
 
     public FragmentOne() {
         // Required empty public constructor
@@ -33,19 +34,33 @@ public class FragmentOne extends Fragment {
         // Inflate the layout for this fragment
 
 
-        View view = inflater.inflate(R.layout.fragment_fragment_one, container, false);
+        view = inflater.inflate(R.layout.fragment_fragment_one, container, false);
 
-        DataBaseHelper helper = new DataBaseHelper(getContext());
+        helper = new DataBaseHelper(getContext());
 
-        ArrayList<Users> num = helper.getAllUser();
+        mSwipeRefreshLayout = view.findViewById(R.id.refresh);
 
-        LecAdapter adapter = new LecAdapter(getContext(),num);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ArrayList<Users> num = helper.getAllUser();
 
-        ListView listView = view.findViewById(R.id.list);
+                        LecAdapter adapter = new LecAdapter(getContext(),num);
 
-        listView.setAdapter(adapter);
+                        ListView listView = view.findViewById(R.id.list);
 
-        adapter.notifyDataSetChanged();
+                        listView.setAdapter(adapter);
+
+                        adapter.notifyDataSetChanged();
+
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                },2000);
+            }
+        });
 
         return view;
     }

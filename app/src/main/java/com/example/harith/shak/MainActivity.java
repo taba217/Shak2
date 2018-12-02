@@ -2,6 +2,7 @@ package com.example.harith.shak;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -44,6 +45,13 @@ public class MainActivity extends AppCompatActivity {
 
          volleyreguest();
          LoadFragment(new FragmentOne());
+
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//            volleyreguest();
+//            }
+//        },1000);
 
         TabLayout tabLayout =  findViewById(R.id.tab);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
