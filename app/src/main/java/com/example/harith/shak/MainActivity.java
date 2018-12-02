@@ -47,12 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
          LoadFragment(new FragmentOne());
 
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//            volleyreguest();
-//            }
-//        },1000);
+
 
         TabLayout tabLayout =  findViewById(R.id.tab);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
