@@ -50,17 +50,12 @@ public class myservice extends Service {
 
     @Override
     public void onCreate() {
-        Toast.makeText(this,"service created"+notify+":",Toast.LENGTH_LONG).show();
+      //  Toast.makeText(this,"service created"+notify+":",Toast.LENGTH_LONG).show();
         mQueue = Volley.newRequestQueue(this);
-
         SharedPreferences sharedPref = getSharedPreferences("mySettings", MODE_PRIVATE);
-
         s0 = sharedPref.getInt("mySetting", s0);
-
-
         super.onCreate();
     }
-
     Handler mHandler = new Handler();
     Runnable mHandlerTask = new Runnable(){
         @Override

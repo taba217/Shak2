@@ -1,6 +1,7 @@
 package com.example.harith.shak.Fragment;
 
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,18 +9,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.example.harith.shak.MainActivity;
+import com.example.harith.shak.MapsActivity;
 import com.example.harith.shak.R;
+import com.example.harith.shak.ShProfileActivity;
 import com.example.harith.shak.db.DataBaseHelper;
 import com.example.harith.shak.db.LecAdapter;
 import com.example.harith.shak.db.Users;
 
 import java.util.ArrayList;
 
+import static com.example.harith.shak.MainActivity.v;
+
 
 public class FragmentOne extends Fragment {
-
+     ListView listView;
 
 
     public FragmentOne() {
@@ -40,11 +48,13 @@ public class FragmentOne extends Fragment {
 
         LecAdapter adapter = new LecAdapter(getContext(),num);
 
-        ListView listView = view.findViewById(R.id.list);
+         listView = view.findViewById(R.id.list);
 
         listView.setAdapter(adapter);
 
         return view;
+
+
     }
 
 

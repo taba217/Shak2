@@ -98,7 +98,6 @@ public class DataBaseHelper extends SQLiteOpenHelper  {
     public void insertUser() {
         ContentValues values = new ContentValues();
          // for (int i = 1; i < JsonArray.length; i++) {
-
             values.put(USERS_COLUMN_NAME, topic);  // JSONString[i].getString("uname") == Mogtba
             values.put(USERS_COLUMN_PASS, status);      //  ..........................
             values.put(USERS_COLUMN_PHONE, status);

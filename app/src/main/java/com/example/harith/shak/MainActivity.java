@@ -42,10 +42,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //taba217
         //==================================================================
-        jsonParse1();
+        //startService(new Intent(this, myservice.class));
+          jsonParse1();
         //==================================================================
-         helper = new DataBaseHelper(this);
-         helper.insertUser();
+
          displayDataBaseInfo();
 
 
@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-                Toast.makeText(MainActivity.this, "" + tab.getPosition(), Toast.LENGTH_SHORT).show();
+              //  viewPager.setCurrentItem(tab.getPosition());
+                //Toast.makeText(MainActivity.this, "" + tab.getPosition(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -75,15 +75,20 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-jsonParse1();
+
             }
         });
+    }
+    @Override
+    protected void onStart() {
+        helper = new DataBaseHelper(this);
+     //   jsonParse1();
+        super.onStart();
     }
 //taba217 work::::::
 //=====================================================================================
 public void jsonParse1() {
-    startService(new Intent(this, myservice.class));
-    String url1 = "http://zad.epizy.com/getlec.php";
+      String url1 = "http://zad.epizy.com/getlec.php";
     String url = "http://192.168.43.128/zad/getlec.php";
     final ProgressDialog progressDialog = new ProgressDialog(this);
     progressDialog.setMessage("جاري التحديث...");
@@ -93,6 +98,8 @@ public void jsonParse1() {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
+
+
                         JSONArray jsonArray = response.getJSONArray("emp");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject lectures = jsonArray.getJSONObject(i);
@@ -104,6 +111,7 @@ public void jsonParse1() {
                             locat = lectures.getString("locat");
                             time = lectures.getString("time");
                             status = lectures.getInt("status");
+                            helper.insertUser();
                            }
                          progressDialog.dismiss();
 
@@ -128,13 +136,6 @@ public void jsonParse1() {
     RequestQueue requestQueue = Volley.newRequestQueue(this);
     requestQueue.add(request);
 }
-    public void maploc() {
-        Intent i = new Intent(this, MapsActivity.class);
-        i.putExtra("v", v);
-        i.putExtra("h", h);
-        i.putExtra("title", locat);
-        startActivity(i);
-    }
 
     protected void onDestroy() {
 
