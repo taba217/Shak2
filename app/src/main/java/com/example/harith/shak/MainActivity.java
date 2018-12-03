@@ -1,16 +1,11 @@
 package com.example.harith.shak;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ListView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -20,14 +15,10 @@ import com.android.volley.toolbox.Volley;
 import com.example.harith.shak.Fragment.FragmentOne;
 import com.example.harith.shak.Fragment.PagerAdapter;
 import com.example.harith.shak.db.DataBaseHelper;
-import com.example.harith.shak.db.LecAdapter;
-import com.example.harith.shak.db.Users;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     DataBaseHelper helper;
@@ -46,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
          volleyreguest();
 
          LoadFragment(new FragmentOne());
-
 
 
         TabLayout tabLayout =  findViewById(R.id.tab);
@@ -94,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void volleyreguest(){
-
 
         mRequestQueue = Volley.newRequestQueue(getApplicationContext());
 
