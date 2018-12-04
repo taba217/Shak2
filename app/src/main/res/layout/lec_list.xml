@@ -71,14 +71,16 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/img"
         android:layout_width="48dp"
         android:layout_height="46dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="7dp"
         android:layout_marginRight="7dp"
+        android:onClick="profile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/location_map_medium" />
+        app:srcCompat="@mipmap/location_map_medium"
+        />
 
 </android.support.constraint.ConstraintLayout>

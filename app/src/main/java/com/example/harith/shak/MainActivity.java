@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -181,4 +182,10 @@ public void jsonParse1() {
         }
     }
 
+  public void profile(View view) {
+      ImageView img=findViewById(R.id.img);
+     // img.setBackground();
+        Intent i=new Intent(this,MapsActivity.class);
+        startActivity(i);
+    }
 }

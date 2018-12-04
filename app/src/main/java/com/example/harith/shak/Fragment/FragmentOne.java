@@ -23,11 +23,12 @@ import com.example.harith.shak.db.Users;
 
 import java.util.ArrayList;
 
+import static android.media.CamcorderProfile.get;
 import static com.example.harith.shak.MainActivity.v;
 
 
 public class FragmentOne extends Fragment {
-     ListView listView;
+    ListView listView;
 
 
     public FragmentOne() {
@@ -44,20 +45,31 @@ public class FragmentOne extends Fragment {
 
         DataBaseHelper helper = new DataBaseHelper(getContext());
 
-        ArrayList<Users> num = helper.getAllUser();
+       final ArrayList<Users> num = helper.getAllUser();
 
-        LecAdapter adapter = new LecAdapter(getContext(),num);
+        LecAdapter adapter = new LecAdapter(getContext(), num);
 
-         listView = view.findViewById(R.id.list);
+        listView = view.findViewById(R.id.list);
 
         listView.setAdapter(adapter);
 
-        return view;
 
 
+listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent i=new Intent(getContext(),ShProfileActivity.class);
+        Users rowdata=num.get(position);
+        String f=rowdata.getName();
+        i.putExtra(rowdata.getName(),"name");
+        Toast.makeText(getContext(),f, Toast.LENGTH_SHORT).show();
+        // startActivity(i);
     }
+});
 
 
 
+
+        return view;}
 
 }
