@@ -188,4 +188,10 @@ public void jsonParse1() {
         Intent i=new Intent(this,MapsActivity.class);
         startActivity(i);
     }
+
+    public void anoclick(View view) {
+        ImageView imageView = view.findViewById(R.id.ano);
+        Intent i=new Intent(this,ShProfileActivity.class);
+        startActivity(i);
+    }
 }

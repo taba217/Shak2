@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -63,13 +64,11 @@ listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         String f=rowdata.getName();
         i.putExtra(rowdata.getName(),"name");
         Toast.makeText(getContext(),f, Toast.LENGTH_SHORT).show();
-        // startActivity(i);
+         startActivity(i);
     }
 });
 
-
-
-
         return view;}
+
 
 }

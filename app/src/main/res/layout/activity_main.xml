@@ -5,13 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity"
-    android:background="@mipmap/main_page_components">
+    tools:context=".MainActivity">
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="3dp"
         android:visibility="invisible"
         app:tabMode="scrollable"
         tools:ignore="MissingConstraints"
@@ -34,6 +33,12 @@
             android:text="@string/map" />
     </android.support.design.widget.TabLayout>
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        app:srcCompat="@mipmap/main_page1" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
@@ -48,9 +53,6 @@
     android:id="@+id/frag"
     android:name="com.example.harith.shak.Fragment.FragmentOne"
     />
-
-
-
 
 
 </LinearLayout>
