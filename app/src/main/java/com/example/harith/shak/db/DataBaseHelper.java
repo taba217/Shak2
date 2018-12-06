@@ -102,7 +102,6 @@ public class DataBaseHelper extends SQLiteOpenHelper  {
             values.put(USERS_COLUMN_PASS, status);      //  ..........................
             values.put(USERS_COLUMN_PHONE, status);
             values.put(USERS_COLUMN_FOLLOW_ID, status);
-
             SQLiteDatabase db = getWritableDatabase();
             db.insert(TABLE_USERS, null, values);
         //}

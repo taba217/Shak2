@@ -21,6 +21,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import com.example.harith.shak.Fragment.FragmentOne;
@@ -36,16 +37,19 @@ public class MainActivity extends AppCompatActivity {
     DataBaseHelper helper;
     public static String locat,topic,sh_id,time,st,id;
     public static double v =0, h = 0;
+    private RequestQueue mRequestQueue;
+    private StringRequest mStringRequest;
+    private String url = "http://www.mocky.io/v2/597c41390f0000d002f4dbd1";
+    String name;
     public static int status;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //taba217
-        //==================================================================
+
+
         //startService(new Intent(this, myservice.class));
-          jsonParse1();
-        //==================================================================
+       volleyreguest();
 
          displayDataBaseInfo();
 
@@ -90,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
 //=====================================================================================
 public void jsonParse1() {
       String url1 = "http://zad.epizy.com/getlec.php";
-    String url = "http://192.168.43.128/zad/getlec.php";
+    String url0 = "http://192.168.43.128/zad/getlec.php";
+    //String url="http://www.mocky.io/v2/597c41390f0000d002f4dbd1";
     final ProgressDialog progressDialog = new ProgressDialog(this);
     progressDialog.setMessage("جاري التحديث...");
     progressDialog.show();
@@ -99,21 +104,21 @@ public void jsonParse1() {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
-
-
                         JSONArray jsonArray = response.getJSONArray("emp");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject lectures = jsonArray.getJSONObject(i);
-                            locat = lectures.getString("locat");
+
+                            locat = lectures.getString("name");
                             v = lectures.getDouble("v");
                             h = lectures.getDouble("h");
                             sh_id = lectures.getString("sh_name");
                             topic = lectures.getString("topic");
                             locat = lectures.getString("locat");
                             time = lectures.getString("time");
-                            status = lectures.getInt("status");
+                            status = lectures.getInt("id");
                             helper.insertUser();
-                           }
+                            Toast.makeText(MainActivity.this,"name" + locat ,Toast.LENGTH_LONG).show();
+                        }
                          progressDialog.dismiss();
 
                     } catch (JSONException e) {
@@ -182,16 +187,45 @@ public void jsonParse1() {
         }
     }
 
-  public void profile(View view) {
-      ImageView img=findViewById(R.id.img);
-     // img.setBackground();
-        Intent i=new Intent(this,MapsActivity.class);
-        startActivity(i);
+
+    public void volleyreguest(){
+
+       mRequestQueue = Volley.newRequestQueue(this);
+
+        mStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject root = new JSONObject(response);
+
+                    JSONArray jsonArray = root.getJSONArray("users");
+
+                    for (int i =0; i<jsonArray.length(); i++) {
+
+                        JSONObject object = jsonArray.getJSONObject(0);
+
+                       topic =  object.getString("name");
+                        status = object.getInt("id");
+                        helper.insertUser();
+                       // helper.insertUser(name,password,password,password);
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+               // Toast.makeText(getApplicationContext(), "Name: " + locat, Toast.LENGTH_LONG).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        mRequestQueue.add(mStringRequest);
     }
 
-    public void anoclick(View view) {
-        ImageView imageView = view.findViewById(R.id.ano);
-        Intent i=new Intent(this,ShProfileActivity.class);
-        startActivity(i);
-    }
+
 }
