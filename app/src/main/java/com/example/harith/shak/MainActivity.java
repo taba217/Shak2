@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         //startService(new Intent(this, myservice.class));
          volleyreguest();
-         // My volley Request nnn
+         // My volley Request
          displayDataBaseInfo();
 
 
