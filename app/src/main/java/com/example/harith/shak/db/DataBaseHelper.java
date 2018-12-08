@@ -14,7 +14,7 @@ import static com.example.harith.shak.MainActivity.v;
 import static com.example.harith.shak.MainActivity.h;
 import static com.example.harith.shak.MainActivity.topic;
 
-public class DataBaseHelper extends SQLiteOpenHelper  {
+public class DataBaseHelper extends SQLiteOpenHelper {
 
     public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -37,7 +37,7 @@ public class DataBaseHelper extends SQLiteOpenHelper  {
     private static final int DATABASE_VERSION = 1;
 
     // Data Base Name
-    private static final String DATABASE_NAME  = "myLec";
+    private static final String DATABASE_NAME = "myLec";
 
     // Table Names
     private static final String TABLE_LEC = "lec";
@@ -68,27 +68,27 @@ public class DataBaseHelper extends SQLiteOpenHelper  {
 
     // SQL Create Lec Table
     private String CREATE_TABLE_LEC = "CREATE TABLE "
-               + TABLE_LEC +"(" + L_ID  + " INTEGER PRIMARY KEY,"
-                                + TOPIC + " TEXT NOT NULL,"
-                                + TIME  + " TEXT NOT NULL,"
-                                + LOCAT + " INTEGER,"
-                                + SH_ID + " INTEGER,"
-                                + STATUS+ " INTEGER"
-                                + ")";
+            + TABLE_LEC + "(" + L_ID + " INTEGER PRIMARY KEY,"
+            + TOPIC + " TEXT NOT NULL,"
+            + TIME + " TEXT NOT NULL,"
+            + LOCAT + " INTEGER,"
+            + SH_ID + " INTEGER,"
+            + STATUS + " INTEGER"
+            + ")";
     // SQL Create SHEKH Table
     private String CREATE_TABLE_SHEKH = "CREATE TABLE "
-            + TABLE_SHEKH +"(" + S_ID + " INTEGER PRIMARY KEY,"
+            + TABLE_SHEKH + "(" + S_ID + " INTEGER PRIMARY KEY,"
             + SHEKH_COLUMN_F_NAME + " TEXT NOT NULL,"
-            + SHEKH_COLUMN_L_NAME  + " TEXT NOT NULL,"
+            + SHEKH_COLUMN_L_NAME + " TEXT NOT NULL,"
             + SHEKH_COLUMN_U_NAME + " TEXT,"
             + SHEKH_COLUMN_PASSWORD + " INTEGER"
             + ")";
     // SQL Create USERS Table
     private String CREATE_TABLE_USERS = "CREATE TABLE "
-            + TABLE_USERS +"("
+            + TABLE_USERS + "("
             + USERS_ID + " INTEGER PRIMARY KEY,"
             + USERS_COLUMN_NAME + " TEXT NOT NULL,"
-            + USERS_COLUMN_PASS  + " INTEGER NOT NULL,"
+            + USERS_COLUMN_PASS + " INTEGER NOT NULL,"
             + USERS_COLUMN_PHONE + " INTEGER,"
             + USERS_COLUMN_FOLLOW_ID + " INTEGER"
             + ")";
@@ -97,45 +97,45 @@ public class DataBaseHelper extends SQLiteOpenHelper  {
     //
     public void insertUser() {
         ContentValues values = new ContentValues();
-         // for (int i = 1; i < JsonArray.length; i++) {
-            values.put(USERS_COLUMN_NAME, topic);  // JSONString[i].getString("uname") == Mogtba
-            values.put(USERS_COLUMN_PASS, status);      //  ..........................
-            values.put(USERS_COLUMN_PHONE, status);
-            values.put(USERS_COLUMN_FOLLOW_ID, status);
-            SQLiteDatabase db = getWritableDatabase();
-            db.insert(TABLE_USERS, null, values);
+        // for (int i = 1; i < JsonArray.length; i++) {
+        values.put(USERS_COLUMN_NAME, topic);  // JSONString[i].getString("uname") == Mogtba
+        values.put(USERS_COLUMN_PASS, status);      //  ..........................
+        values.put(USERS_COLUMN_PHONE, status);
+        values.put(USERS_COLUMN_FOLLOW_ID, status);
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(TABLE_USERS, null, values);
         //}
     }
 
-    public  ArrayList<Users> getAllUser() {
+    public ArrayList<Users> getAllUser() {
 
         Cursor cursor;
         ArrayList<Users> users = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        cursor = db.rawQuery("SELECT * FROM " + TABLE_USERS ,null);
+        cursor = db.rawQuery("SELECT * FROM " + TABLE_USERS, null);
 
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()) {
 
             // get all column indexes
-            int columnIndexID     = cursor.getColumnIndex(USERS_ID);
-            int columnIndexName   = cursor.getColumnIndex(USERS_COLUMN_NAME);
-            int columnPassIndex   = cursor.getColumnIndex(USERS_COLUMN_PASS);
-            int columnPhoneIndex  = cursor.getColumnIndex(USERS_COLUMN_PHONE);
+            int columnIndexID = cursor.getColumnIndex(USERS_ID);
+            int columnIndexName = cursor.getColumnIndex(USERS_COLUMN_NAME);
+            int columnPassIndex = cursor.getColumnIndex(USERS_COLUMN_PASS);
+            int columnPhoneIndex = cursor.getColumnIndex(USERS_COLUMN_PHONE);
             int columnFollowindex = cursor.getColumnIndex(USERS_COLUMN_FOLLOW_ID);
 
 
             // get value from table using the index of the field
             String Name = cursor.getString(columnIndexName);
-            int ID      = cursor.getInt(columnIndexID);
-            int Phone   = cursor.getInt(columnPhoneIndex);
-            int PassWord= cursor.getInt(columnPassIndex);
-            int FollowId= cursor.getInt(columnFollowindex);
+            int ID = cursor.getInt(columnIndexID);
+            int Phone = cursor.getInt(columnPhoneIndex);
+            int PassWord = cursor.getInt(columnPassIndex);
+            int FollowId = cursor.getInt(columnFollowindex);
 
-            users.add(new Users(ID,Name,PassWord,Phone,FollowId));
+            users.add(new Users(ID, Name, PassWord, Phone, FollowId));
 
             cursor.moveToNext();
         }
@@ -145,16 +145,3 @@ public class DataBaseHelper extends SQLiteOpenHelper  {
         return users;
     }
 }
-
-
-/*
-// SQL Create USERS Table
-    private String CREATE_TABLE_USERS = "CREATE TABLE "
-            + TABLE_USERS +"("
-            + USERS_ID + " INTEGER PRIMARY KEY,"
-            + USERS_COLUMN_NAME + " TEXT NOT NULL,"
-            + USERS_COLUMN_PASS  + " INTEGER NOT NULL,"
-            + USERS_COLUMN_PHONE + " INTEGER,"
-            + USERS_COLUMN_FOLLOW_ID + " INTEGER"
-            + ")";
- */
