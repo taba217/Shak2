@@ -14,21 +14,17 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                FragmentOne one = new FragmentOne();
-                return one;
+                return new FragmentTow();
             case 1:
-                FragmentTow tow = new FragmentTow();
-                return tow;
-            case 2:
-                FragmentMap Map = new FragmentMap();
-                return Map;
-                default:
-                    return null;
+                return  new FragmentOne();;
+            default:
+                return null;
         }
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 }
+

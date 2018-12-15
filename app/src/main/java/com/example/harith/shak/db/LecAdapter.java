@@ -27,7 +27,7 @@ public class LecAdapter extends ArrayAdapter<Users> {
 
         View listview = convertView;
         if (listview == null) {
-            listview = LayoutInflater.from(getContext()).inflate(R.layout.lec_list,parent,false);
+            listview = LayoutInflater.from(getContext()).inflate(R.layout.custom_list,parent,false);
         }
 
 

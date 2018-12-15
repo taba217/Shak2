@@ -5,13 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import java.util.ArrayList;
-
-import static com.example.harith.shak.MainActivity.locat;
 import static com.example.harith.shak.MainActivity.status;
-import static com.example.harith.shak.MainActivity.v;
-import static com.example.harith.shak.MainActivity.h;
 import static com.example.harith.shak.MainActivity.topic;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
@@ -73,7 +68,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             + TIME + " TEXT NOT NULL,"
             + LOCAT + " INTEGER,"
             + SH_ID + " INTEGER,"
-            + STATUS + " INTEGER"
+            + STATUS + " INTEGER DEFAULT 0"
             + ")";
     // SQL Create SHEKH Table
     private String CREATE_TABLE_SHEKH = "CREATE TABLE "
@@ -90,21 +85,35 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             + USERS_COLUMN_NAME + " TEXT NOT NULL,"
             + USERS_COLUMN_PASS + " INTEGER NOT NULL,"
             + USERS_COLUMN_PHONE + " INTEGER,"
-            + USERS_COLUMN_FOLLOW_ID + " INTEGER"
+            + USERS_COLUMN_FOLLOW_ID + " INTEGER "
             + ")";
 
 
     //
     public void insertUser() {
         ContentValues values = new ContentValues();
-        // for (int i = 1; i < JsonArray.length; i++) {
-        values.put(USERS_COLUMN_NAME, topic);  // JSONString[i].getString("uname") == Mogtba
-        values.put(USERS_COLUMN_PASS, status);      //  ..........................
+
+        values.put(USERS_COLUMN_NAME, topic);
+        values.put(USERS_COLUMN_PASS, status);
         values.put(USERS_COLUMN_PHONE, status);
         values.put(USERS_COLUMN_FOLLOW_ID, status);
+
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_USERS, null, values);
-        //}
+
+    }
+
+    public void insertUserLec(String lecTitle, String lecTIme, int location, int sh_id) {
+        ContentValues values = new ContentValues();
+
+        values.put(TOPIC, lecTitle);
+        values.put(TIME, lecTIme);
+        values.put(LOCAT, location);
+        values.put(SH_ID, sh_id);
+        values.put(STATUS, 0);
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(TABLE_LEC, null, values);
+
     }
 
     public ArrayList<Users> getAllUser() {
@@ -143,5 +152,31 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         // users.add(new Users("1","Kalid",1324,123456,1));
         db.close();
         return users;
+    }
+
+    public ArrayList<Lecture> getAllLecture(){
+
+        Cursor cursor;
+
+        ArrayList<Lecture> lectures = new ArrayList<>();
+
+        SQLiteDatabase database = getWritableDatabase();
+
+        cursor = database.rawQuery("SELECT * FROM " + TABLE_LEC,null);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+
+            String LecTitle = cursor.getString(cursor.getColumnIndex(TOPIC));
+            String Time     = cursor.getString(cursor.getColumnIndex(TIME));
+            int location    = cursor.getInt(cursor.getColumnIndex(LOCAT));
+            int shID        = cursor.getInt(cursor.getColumnIndex(SH_ID));
+
+            lectures.add(new Lecture(LecTitle, Time, location, shID));
+        }
+
+        database.close();
+        return lectures;
     }
 }

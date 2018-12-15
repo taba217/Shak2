@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:padding="16dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:background="@color/lec"
+
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:id="@+id/lec_name"
+                android:gravity="center_vertical"
+                android:paddingEnd="8dp"
+                android:paddingLeft="8dp"
+                android:textDirection="rtl"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/lec_title"
+                android:paddingRight="8dp" />
+
+            <TextView
+                android:textAlignment="center"
+                android:textSize="14sp"
+                android:gravity="center_vertical"
+                android:id="@+id/lec_sub"
+                android:textDirection="rtl"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/person_name"
+                android:textStyle="bold"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:paddingRight="8dp"
+                android:paddingLeft="8dp" />
+
+            <TextView
+
+                android:textSize="8sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:gravity="center_vertical"
+                android:id="@+id/lec_date"
+                android:paddingRight="8dp"
+                android:paddingLeft="8dp"
+                android:textDirection="rtl"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/lec_time"
+                android:layout_gravity="center"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:contentDescription="person"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_person_black_24dp" />
+
+    </LinearLayout>
+

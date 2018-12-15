@@ -1,29 +1,18 @@
 package com.example.harith.shak;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import com.example.harith.shak.Fragment.FragmentOne;
 import com.example.harith.shak.Fragment.PagerAdapter;
 import com.example.harith.shak.db.DataBaseHelper;
@@ -31,7 +20,6 @@ import com.example.harith.shak.service.myservice;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.example.harith.shak.service.myservice;
 
 public class MainActivity extends AppCompatActivity {
     DataBaseHelper helper;
@@ -47,13 +35,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Add Default Data
 
-        //startService(new Intent(this, myservice.class));
-         volleyreguest();
-         // My volley Request
-         displayDataBaseInfo();
+//       helper.insertUserLec("الشباب امل الامه وفخرها","الاثنين زو القعدة 1440ه الموافق 2018/12/12 السادسه مساء",12331,1);
 
-
+        startService(new Intent(this, myservice.class));
+        volleyreguest();
         LoadFragment(new FragmentOne());
 
         TabLayout tabLayout =  findViewById(R.id.tab);
@@ -69,8 +56,10 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-              //  viewPager.setCurrentItem(tab.getPosition());
-                //Toast.makeText(MainActivity.this, "" + tab.getPosition(), Toast.LENGTH_SHORT).show();
+              viewPager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == 1) {
+                    volleyreguest();
+                }
             }
 
             @Override
@@ -90,58 +79,6 @@ public class MainActivity extends AppCompatActivity {
      //   jsonParse1();
         super.onStart();
     }
-//taba217 work::::::
-//=====================================================================================
-public void jsonParse1() {
-      String url1 = "http://zad.epizy.com/getlec.php";
-    String url0 = "http://192.168.43.128/zad/getlec.php";
-    //String url="http://www.mocky.io/v2/597c41390f0000d002f4dbd1";
-    final ProgressDialog progressDialog = new ProgressDialog(this);
-    progressDialog.setMessage("جاري التحديث...");
-    progressDialog.show();
-    JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-            new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        JSONArray jsonArray = response.getJSONArray("emp");
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject lectures = jsonArray.getJSONObject(i);
-
-                            locat = lectures.getString("name");
-                            v = lectures.getDouble("v");
-                            h = lectures.getDouble("h");
-                            sh_id = lectures.getString("sh_name");
-                            topic = lectures.getString("topic");
-                            locat = lectures.getString("locat");
-                            time = lectures.getString("time");
-                            status = lectures.getInt("id");
-                            helper.insertUser();
-                            Toast.makeText(MainActivity.this,"name" + locat ,Toast.LENGTH_LONG).show();
-                        }
-                         progressDialog.dismiss();
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                       progressDialog.dismiss();
-                    }
-                }
-
-            }, new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            error.printStackTrace();
-            progressDialog.dismiss();
-
-
-
-
-        }
-    });
-
-    RequestQueue requestQueue = Volley.newRequestQueue(this);
-    requestQueue.add(request);
-}
 
     protected void onDestroy() {
 
@@ -156,10 +93,6 @@ public void jsonParse1() {
         super.onDestroy();
     }
 
-  //  ====================================================================================
-
-
-
     private void LoadFragment(Fragment fragment) {
 
         getSupportFragmentManager()
@@ -168,30 +101,9 @@ public void jsonParse1() {
                 .commit();
     }
 
-    public void displayDataBaseInfo() {
-        DataBaseHelper helper = new DataBaseHelper(this);
-
-
-        try {
-
-            SQLiteDatabase database = helper.getReadableDatabase();
-
-            Cursor c = database.rawQuery("SELECT * FROM users",null);
-
-
-            Toast.makeText(MainActivity.this,"NUM " + c.getCount() ,Toast.LENGTH_LONG).show();
-
-
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
     public void volleyreguest(){
 
        mRequestQueue = Volley.newRequestQueue(this);
-
         mStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -205,12 +117,13 @@ public void jsonParse1() {
 
                         JSONObject object = jsonArray.getJSONObject(0);
 
-                       topic =  object.getString("name");
+                        topic =  object.getString("name");
                         status = object.getInt("id");
                         helper.insertUser();
                        // helper.insertUser(name,password,password,password);
-
+                        helper.insertUserLec("الشباب امل الامه وفخرها","الاثنين زو القعدة 1440ه الموافق 2018/12/12 السادسه مساء",12331,1);
                     }
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -220,7 +133,6 @@ public void jsonParse1() {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
             }
         });
 
@@ -229,3 +141,61 @@ public void jsonParse1() {
 
 
 }
+
+
+
+
+
+
+//    //taba217 work::::::
+////=====================================================================================
+//    public void jsonParse1() {
+//        String url1 = "http://zad.epizy.com/getlec.php";
+//        String url0 = "http://192.168.43.128/zad/getlec.php";
+//        //String url="http://www.mocky.io/v2/597c41390f0000d002f4dbd1";
+//        final ProgressDialog progressDialog = new ProgressDialog(this);
+//        progressDialog.setMessage("جاري التحديث...");
+//        progressDialog.show();
+//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        try {
+//                            JSONArray jsonArray = response.getJSONArray("emp");
+//                            for (int i = 0; i < jsonArray.length(); i++) {
+//                                JSONObject lectures = jsonArray.getJSONObject(i);
+//
+//                                locat = lectures.getString("name");
+//                                v = lectures.getDouble("v");
+//                                h = lectures.getDouble("h");
+//                                sh_id = lectures.getString("sh_name");
+//                                topic = lectures.getString("topic");
+//                                locat = lectures.getString("locat");
+//                                time = lectures.getString("time");
+//                                status = lectures.getInt("id");
+//                                helper.insertUser();
+//                                Toast.makeText(MainActivity.this,"name" + locat ,Toast.LENGTH_LONG).show();
+//                            }
+//                            progressDialog.dismiss();
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                            progressDialog.dismiss();
+//                        }
+//                    }
+//
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                error.printStackTrace();
+//                progressDialog.dismiss();
+//
+//
+//
+//
+//            }
+//        });
+//
+//        RequestQueue requestQueue = Volley.newRequestQueue(this);
+//        requestQueue.add(request);
+//    }

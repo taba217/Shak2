@@ -6,10 +6,21 @@
     tools:context=".Fragment.FragmentOne"
     >
 
-   <ListView
-       android:layout_margin="8dp"
-       android:id="@+id/list"
+   <android.support.v4.widget.SwipeRefreshLayout
+       android:id="@+id/refresh"
        android:layout_width="match_parent"
-       android:layout_height="match_parent"/>
+       android:layout_height="wrap_content">
+
+      <ListView
+          android:background="@null"
+          android:divider="@null"
+          android:dividerHeight="0dp"
+          android:layout_margin="8dp"
+          android:id="@+id/list"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          tools:targetApi="lollipop" />
+
+   </android.support.v4.widget.SwipeRefreshLayout>
 
 </FrameLayout>

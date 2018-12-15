@@ -46,7 +46,7 @@ public class myservice extends Service {
     ArrayList<Integer> statusSum=new ArrayList<>();
     private RequestQueue mQueue;
     public NotificationCompat.Builder mBuilder =
-            new NotificationCompat.Builder(this);
+            new NotificationCompat.Builder(this, "");
 
     @Override
     public void onCreate() {
